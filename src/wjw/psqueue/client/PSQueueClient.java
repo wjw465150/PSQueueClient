@@ -15,6 +15,11 @@ import wjw.psqueue.msg.ResData;
 import wjw.psqueue.msg.ResSubStatus;
 import wjw.psqueue.msg.ResultCode;
 
+/**
+ * 
+ * @author wjw465150@gmail.com
+ *
+ */
 public class PSQueueClient {
 	static {
 		System.setProperty("http.keepAlive", "true");
@@ -46,11 +51,9 @@ public class PSQueueClient {
 	}
 
 	/**
-	 * 处理HTTP的GET请求,如果不需要BASIC验证,把user以及pass设置为null值
+	 * 处理HTTP的GET请求
 	 * 
 	 * @param urlstr 请求的URL
-	 * @param user 用户名
-	 * @param pass 口令
 	 * @return 服务器的返回信息
 	 * @throws IOException
 	 */
@@ -105,12 +108,10 @@ public class PSQueueClient {
 	}
 
 	/**
-	 * 处理HTTP的POST请求,如果不需要BASIC验证,把user以及pass设置为null值
+	 * 处理HTTP的POST请求
 	 * 
 	 * @param urlstr 请求的URL
 	 * @param data 入队列的消息内容
-	 * @param user 用户名
-	 * @param pass 口令
 	 * @return 服务器的返回信息
 	 * @throws IOException
 	 */
@@ -182,7 +183,7 @@ public class PSQueueClient {
 	 * 
 	 * @param queueName 队列名
 	 * @param subName 订阅名
-	 * @return
+	 * @return ResSubStatus
 	 */
 	public ResSubStatus status(String queueName, String subName) {
 		String strResult = null;
@@ -201,7 +202,7 @@ public class PSQueueClient {
 	 * 
 	 * @param queueName 队列名
 	 * @param data 入队列的消息内容
-	 * @return
+	 * @return ResAdd
 	 */
 	public ResAdd add(final String queueName, final String data) {
 		String strResult = null;
@@ -215,6 +216,12 @@ public class PSQueueClient {
 		}
 	}
 
+	/**
+	 * 出队列
+	 * @param queueName 队列名
+	 * @param subName 订阅者名
+	 * @return ResData
+	 */
 	public ResData poll(final String queueName, final String subName) {
 		String strResult = null;
 		try {
@@ -227,6 +234,12 @@ public class PSQueueClient {
 		}
 	}
 
+	/**
+	 * 查看指定队列名和指定位置的消息
+	 * @param queueName 队列名
+	 * @param pos 位置
+	 * @return ResData
+	 */
 	public ResData view(final String queueName, final long pos) {
 		String strResult = null;
 		try {
