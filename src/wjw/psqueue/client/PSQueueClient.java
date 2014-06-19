@@ -12,13 +12,15 @@ import org.wjw.efjson.JsonObject;
 
 import wjw.psqueue.msg.ResAdd;
 import wjw.psqueue.msg.ResData;
+import wjw.psqueue.msg.ResList;
+import wjw.psqueue.msg.ResQueueStatus;
 import wjw.psqueue.msg.ResSubStatus;
 import wjw.psqueue.msg.ResultCode;
 
 /**
  * 
  * @author wjw465150@gmail.com
- *
+ * 
  */
 public class PSQueueClient {
 	static {
@@ -32,6 +34,8 @@ public class PSQueueClient {
 	private String charset; //HTTP请求字符集
 	private int connectTimeout = 0; //连接超时
 	private int readTimeout = 0; //读超时
+
+	private String basrUrl;
 
 	/**
 	 * 建立PSQueue Client
@@ -48,6 +52,8 @@ public class PSQueueClient {
 		this.charset = charset;
 		this.connectTimeout = connectTimeout;
 		this.readTimeout = readTimeout;
+
+		this.basrUrl = "http://" + this.server + ":" + this.port + "/?charset=" + this.charset;
 	}
 
 	/**
@@ -179,21 +185,206 @@ public class PSQueueClient {
 	}
 
 	/**
+	 * 创建队列
+	 * 
+	 * @param queueName 队列名
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode createQueue(final String queueName, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=createQueue";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
+	/**
+	 * 创建指定队列的指定消费
+	 * 
+	 * @param queueName 队列名
+	 * @param subName 订阅者名
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode createSub(String queueName, String subName, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&sname=" + URLEncoder.encode(subName, charset)
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=createSub";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
+	/**
+	 * 删除指定队列
+	 * 
+	 * @param queueName 队列名
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode removeQueue(String queueName, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=removeQueue";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
+	/**
+	 * 删除指定队列的指定订阅者
+	 * 
+	 * @param queueName 队列名
+	 * @param subName 订阅者名
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode removeSub(String queueName, String subName, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&sname=" + URLEncoder.encode(subName, charset)
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=removeSub";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
+	/**
 	 * 查看队列状态
 	 * 
 	 * @param queueName 队列名
-	 * @param subName 订阅名
-	 * @return ResSubStatus
+	 * @return ResQueueStatus
 	 */
-	public ResSubStatus status(String queueName, String subName) {
+	public ResQueueStatus status(String queueName) {
 		String strResult = null;
 		try {
-			String urlstr = "http://" + this.server + ":" + this.port + "/?charset=" + this.charset + "&qname=" + URLEncoder.encode(queueName, charset) + "&sname=" + URLEncoder.encode(subName, charset) + "&opt=status";
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&opt=status";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResQueueStatus.class);
+		} catch (Exception ex) {
+			return new ResQueueStatus(new ResultCode(-1, ex.getMessage()), queueName);
+		}
+	}
+
+	/**
+	 * 查看指定队列指定订阅者的消息状态
+	 * 
+	 * @param queueName 队列名
+	 * @param subName 订阅者名
+	 * @return ResSubStatus
+	 */
+	public ResSubStatus statusForSub(String queueName, String subName) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&sname=" + URLEncoder.encode(subName, charset)
+			    + "&opt=statusForSub";
 
 			strResult = this.doGetProcess(urlstr);
 			return JsonObject.fromJson(strResult, ResSubStatus.class);
 		} catch (Exception ex) {
 			return new ResSubStatus(new ResultCode(-1, ex.getMessage()), queueName, subName);
+		}
+	}
+
+	/**
+	 * 获取全部队列名
+	 * 
+	 * @return ResList
+	 */
+	public ResList queueNames() {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&opt=queueNames";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResList.class);
+		} catch (Exception ex) {
+			return new ResList(new ResultCode(-1, ex.getMessage()));
+		}
+	}
+
+	/**
+	 * 获取指定队列名的全部订阅者
+	 * 
+	 * @param queueName 队列名
+	 * @return ResList
+	 */
+	public ResList subNames(String queueName) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&opt=subNames";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResList.class);
+		} catch (Exception ex) {
+			return new ResList(new ResultCode(-1, ex.getMessage()));
+		}
+	}
+
+	/**
+	 * 重置队列
+	 * 
+	 * @param queueName 队列名
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode resetQueue(String queueName, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=resetQueue";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
 		}
 	}
 
@@ -207,7 +398,9 @@ public class PSQueueClient {
 	public ResAdd add(final String queueName, final String data) {
 		String strResult = null;
 		try {
-			String urlstr = "http://" + this.server + ":" + this.port + "/?charset=" + this.charset + "&qname=" + URLEncoder.encode(queueName, charset) + "&opt=add";
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&opt=add";
 
 			strResult = this.doPostProcess(urlstr, data);
 			return JsonObject.fromJson(strResult, ResAdd.class);
@@ -218,6 +411,7 @@ public class PSQueueClient {
 
 	/**
 	 * 出队列
+	 * 
 	 * @param queueName 队列名
 	 * @param subName 订阅者名
 	 * @return ResData
@@ -225,7 +419,10 @@ public class PSQueueClient {
 	public ResData poll(final String queueName, final String subName) {
 		String strResult = null;
 		try {
-			String urlstr = "http://" + this.server + ":" + this.port + "/?charset=" + this.charset + "&qname=" + URLEncoder.encode(queueName, charset) + "&sname=" + URLEncoder.encode(subName, charset) + "&opt=poll";
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&sname=" + URLEncoder.encode(subName, charset)
+			    + "&opt=poll";
 
 			strResult = this.doGetProcess(urlstr);
 			return JsonObject.fromJson(strResult, ResData.class);
@@ -236,6 +433,7 @@ public class PSQueueClient {
 
 	/**
 	 * 查看指定队列名和指定位置的消息
+	 * 
 	 * @param queueName 队列名
 	 * @param pos 位置
 	 * @return ResData
@@ -243,7 +441,9 @@ public class PSQueueClient {
 	public ResData view(final String queueName, final long pos) {
 		String strResult = null;
 		try {
-			String urlstr = "http://" + this.server + ":" + this.port + "/?charset=" + this.charset + "&qname=" + URLEncoder.encode(queueName, charset) + "&pos=" + pos + "&opt=view";
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&pos=" + pos + "&opt=view";
 
 			strResult = this.doGetProcess(urlstr);
 			return JsonObject.fromJson(strResult, ResData.class);
