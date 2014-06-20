@@ -1,5 +1,7 @@
 package wjw.psqueue.msg;
 
+import java.beans.ConstructorProperties;
+
 public class ResultCode {
 	public final static ResultCode SUCCESS = new ResultCode(0, "ok");
 	public final static ResultCode CMD_INVALID = new ResultCode(1, "Invalid opt command!");
@@ -26,6 +28,7 @@ public class ResultCode {
 	public ResultCode() {
 	}
 
+	@ConstructorProperties({ "code", "msg" })
 	public ResultCode(final int code, final String msg) {
 		this.code = code;
 		this.msg = msg;
