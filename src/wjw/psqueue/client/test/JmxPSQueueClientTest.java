@@ -64,7 +64,7 @@ public class JmxPSQueueClientTest {
 
 	@Test
 	public void test_createQueue() {
-		ResultCode rest = proxy.createQueue(queue_name, adminUser, adminPass);
+		ResultCode rest = proxy.createQueue(queue_name, 2 * 1024 * 1024 * 1024, adminUser, adminPass);
 		if (rest.code == 0) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {

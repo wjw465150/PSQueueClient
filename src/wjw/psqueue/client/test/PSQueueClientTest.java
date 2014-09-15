@@ -29,7 +29,7 @@ public class PSQueueClientTest {
 
 	@Test
 	public void test_createQueue() {
-		ResultCode rest = instance.createQueue(queue_name, user, pass);
+		ResultCode rest = instance.createQueue(queue_name, 2 * 1024 * 1024 * 1024, user, pass);
 		if (rest.code == 0) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {

@@ -11,6 +11,7 @@ public interface AppMXBean {
 	public ResultCode gc();
 
 	public ResultCode createQueue(String queueName,
+			long dbFileMaxSize,
 	    final String user,
 	    final String pass);
 
