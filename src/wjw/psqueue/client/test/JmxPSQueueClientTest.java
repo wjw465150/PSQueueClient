@@ -64,7 +64,17 @@ public class JmxPSQueueClientTest {
 
 	@Test
 	public void test_createQueue() {
-		ResultCode rest = proxy.createQueue(queue_name, 2 * 1024 * 1024 * 1024, adminUser, adminPass);
+		ResultCode rest = proxy.createQueue(queue_name, 10000000L, adminUser, adminPass);
+		if (rest.code == 0) { //成功
+			System.out.println("成功:" + rest.toString());
+		} else {
+			System.out.println("失败:" + rest.toString());
+		}
+	}
+
+	@Test
+	public void test_setQueueCapacity() {
+		ResultCode rest = proxy.setQueueCapacity(queue_name, 11000000L, adminUser, adminPass);
 		if (rest.code == 0) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {

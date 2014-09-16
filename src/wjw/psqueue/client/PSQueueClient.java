@@ -188,20 +188,46 @@ public class PSQueueClient {
 	 * 创建队列
 	 * 
 	 * @param queueName 队列名
-	 * @param dbFileMaxSize 队列数据文件最大大小(字节)
+	 * @param capacity 队列的容量,1百万到10亿之间的数值
 	 * @param user 用户名
 	 * @param pass 口令
 	 * @return ResultCode
 	 */
-	public ResultCode createQueue(final String queueName, final long dbFileMaxSize,final String user, final String pass) {
+	public ResultCode createQueue(final String queueName, final long capacity, final String user, final String pass) {
 		String strResult = null;
 		try {
 			String urlstr = this.basrUrl
 			    + "&qname=" + URLEncoder.encode(queueName, charset)
-			    + "&size=" + dbFileMaxSize
+			    + "&capacity=" + capacity
 			    + "&user=" + URLEncoder.encode(user, charset)
 			    + "&pass=" + URLEncoder.encode(pass, charset)
 			    + "&opt=createQueue";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
+	/**
+	 * 设置队列容量
+	 * 
+	 * @param queueName 队列名
+	 * @param capacity 队列的容量,1百万到10亿之间的数值
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode setQueueCapacity(final String queueName, final long capacity, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&capacity=" + capacity
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=setCapacity";
 
 			strResult = this.doGetProcess(urlstr);
 			return JsonObject.fromJson(strResult, ResultCode.class);

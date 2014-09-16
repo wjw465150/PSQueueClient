@@ -11,10 +11,15 @@ public interface AppMXBean {
 	public ResultCode gc();
 
 	public ResultCode createQueue(String queueName,
-			long dbFileMaxSize,
+			long capacity,
 	    final String user,
 	    final String pass);
 
+	public ResultCode setQueueCapacity(String queueName,
+			long capacity,
+	    final String user,
+	    final String pass);
+	
 	public ResultCode createSub(String queueName,
 	    String subName,
 	    final String user,
