@@ -30,7 +30,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_createQueue() {
 		ResultCode rest = instance.createQueue(queue_name, 10000000L, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -40,7 +40,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_setQueueCapacity() {
 		ResultCode rest = instance.setQueueCapacity(queue_name, 10000000L, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -50,7 +50,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_createSub() {
 		ResultCode rest = instance.createSub(queue_name, sub_name, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -60,7 +60,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_removeQueue() {
 		ResultCode rest = instance.removeQueue(queue_name, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -70,7 +70,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_removeSub() {
 		ResultCode rest = instance.removeSub(queue_name, sub_name, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -80,7 +80,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_status() {
 		ResQueueStatus rest = instance.status(queue_name);
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -90,7 +90,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_statusForSub() {
 		ResSubStatus rest = instance.statusForSub(queue_name, sub_name);
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -100,7 +100,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_queueNames() {
 		ResList rest = instance.queueNames();
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -110,7 +110,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_subNames() {
 		ResList rest = instance.subNames(queue_name);
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -120,7 +120,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_resetQueue() {
 		ResultCode rest = instance.resetQueue(queue_name, user, pass);
-		if (rest.code == 0) { //成功
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -130,7 +130,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_add() {
 		ResAdd rest = instance.add(queue_name, "你好PSQueue");
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -140,7 +140,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_poll() {
 		ResData rest = instance.poll(queue_name, sub_name);
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
@@ -150,7 +150,7 @@ public class PSQueueClientTest {
 	@Test
 	public void test_view() {
 		ResData rest = instance.view(queue_name, 0);
-		if (rest.status.code == 0) { //成功
+		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
 			System.out.println("失败:" + rest.toString());
