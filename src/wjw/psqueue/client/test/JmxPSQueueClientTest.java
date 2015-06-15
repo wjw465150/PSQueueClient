@@ -192,4 +192,13 @@ public class JmxPSQueueClientTest {
 		}
 	}
 
+	@Test
+	public void test_setSubTailPos() {
+		ResultCode rest = proxy.setSubTailPos(queue_name, sub_name, 1, adminUser, adminPass);
+		if (rest.code == 0) { //成功
+			System.out.println("成功:" + rest.toString());
+		} else {
+			System.out.println("失败:" + rest.toString());
+		}
+	}
 }

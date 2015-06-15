@@ -157,4 +157,13 @@ public class PSQueueClientTest {
 		}
 	}
 
+	@Test
+	public void test_setSubTailPos() {
+		ResultCode rest = instance.setSubTailPos(queue_name, sub_name, 1, user, pass);
+		if (rest.code == ResultCode.SUCCESS.code) { //成功
+			System.out.println("成功:" + rest.toString());
+		} else {
+			System.out.println("失败:" + rest.toString());
+		}
+	}
 }

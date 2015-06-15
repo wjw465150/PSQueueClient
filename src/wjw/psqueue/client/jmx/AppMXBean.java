@@ -11,15 +11,15 @@ public interface AppMXBean {
 	public ResultCode gc();
 
 	public ResultCode createQueue(String queueName,
-			long capacity,
+	    long capacity,
 	    final String user,
 	    final String pass);
 
 	public ResultCode setQueueCapacity(String queueName,
-			long capacity,
+	    long capacity,
 	    final String user,
 	    final String pass);
-	
+
 	public ResultCode createSub(String queueName,
 	    String subName,
 	    final String user,
@@ -56,4 +56,9 @@ public interface AppMXBean {
 	public ResData view(String queueName,
 	    final long pos);
 
+	public ResultCode setSubTailPos(String queueName,
+	    String subName,
+	    final long pos,
+	    final String user,
+	    final String pass);
 }

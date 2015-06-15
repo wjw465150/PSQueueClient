@@ -479,4 +479,33 @@ public class PSQueueClient {
 			return new ResData(new ResultCode(-1, ex.getMessage()));
 		}
 	}
+
+	/**
+	 * 设置指定队列的指定订阅者的索引起始位置
+	 * 
+	 * @param queueName 队列名
+	 * @param subName 订阅者名
+	 * @param pos tail的位置
+	 * @param user 用户名
+	 * @param pass 口令
+	 * @return ResultCode
+	 */
+	public ResultCode setSubTailPos(String queueName, String subName, final long pos, final String user, final String pass) {
+		String strResult = null;
+		try {
+			String urlstr = this.basrUrl
+			    + "&qname=" + URLEncoder.encode(queueName, charset)
+			    + "&sname=" + URLEncoder.encode(subName, charset)
+			    + "&pos=" + pos
+			    + "&user=" + URLEncoder.encode(user, charset)
+			    + "&pass=" + URLEncoder.encode(pass, charset)
+			    + "&opt=setSubTailPos";
+
+			strResult = this.doGetProcess(urlstr);
+			return JsonObject.fromJson(strResult, ResultCode.class);
+		} catch (Exception ex) {
+			return new ResultCode(-1, ex.getMessage());
+		}
+	}
+
 }
