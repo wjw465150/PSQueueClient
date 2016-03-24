@@ -3,7 +3,7 @@ apply plugin: 'java'
 defaultTasks 'clean', 'javadoc'
 
 dependencies {
-  compile files("lib/EasyFastJson-2.2.3.jar")
+  compile files("lib/EasyFastJson-2.7.2.jar")
 }
 
 

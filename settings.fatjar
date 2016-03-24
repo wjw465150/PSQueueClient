@@ -1,5 +1,5 @@
 #Fat Jar Configuration File
-#Tue Jun 17 09:37:52 CST 2014
+#Thu Mar 24 14:18:59 CST 2016
 onejar.license.required=true
 manifest.classpath=
 manifest.removesigners=true
@@ -10,5 +10,5 @@ manifest.mainclass=
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
-excludes=<po|PSQueueClient>~wjw/~psqueue/~client/~test/;<jar|EasyFastJson-2.2.3.jar>;<jar|junit.jar>;<jar|org.hamcrest.core_1.1.0.v20090501071000.jar>
+excludes=<po|PSQueueClient>~wjw/~psqueue/~client/~test/;<jar|EasyFastJson-2.7.2.jar>;<jar|junit.jar>;<jar|org.hamcrest.core_1.3.0.v201303031735.jar>
 includes=

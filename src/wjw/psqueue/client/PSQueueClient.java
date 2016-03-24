@@ -27,6 +27,7 @@ public class PSQueueClient {
 		System.setProperty("http.keepAlive", "true");
 		System.setProperty("http.maxConnections", "200");
 		System.setProperty("sun.net.http.errorstream.enableBuffering", "true");
+		System.setProperty("sun.net.http.retryPost", "false");  //解决HttpURLConnection当发生SocketTimeoutException异常时的自己重试BUG!
 	}
 
 	private String server; //服务器IP地址
