@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import org.wjw.efjson.JsonObject;
@@ -141,7 +142,7 @@ public class PSQueueClient {
 			conn.connect();
 
 			writer = new OutputStreamWriter(conn.getOutputStream(), charset);
-			writer.write(data);
+      writer.write(URLEncoder.encode(data, charset));
 			writer.flush();
 
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {

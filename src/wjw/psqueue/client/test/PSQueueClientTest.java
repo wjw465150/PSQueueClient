@@ -129,7 +129,7 @@ public class PSQueueClientTest {
 
 	@Test
 	public void test_add() {
-		ResAdd rest = instance.add(queue_name, "你好PSQueue");
+		ResAdd rest = instance.add(queue_name, "你好PSQueue+0800");
 		if (rest.status.code == ResultCode.SUCCESS.code) { //成功
 			System.out.println("成功:" + rest.toString());
 		} else {
