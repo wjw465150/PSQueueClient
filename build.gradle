@@ -1,7 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
 defaultTasks 'clean', 'javadoc', 'jar'
 
+group = 'wjw.psqueue.client'
 version = "1.0.4"
 ext {
   buildName = "PSQueueClient"
@@ -33,7 +35,7 @@ sourceSets {
   }
 }
 
-jar {  //禁止执行:Jar Task
+jar {
   manifest {
     attributes 'Built-By': 'wjw465150@gmail.com',
     'Build-Name': "${project.buildName}",
@@ -53,3 +55,55 @@ javadoc {
   title = "PSQueueClient"
   includes = ['wjw/psqueue/client/*', 'wjw/psqueue/client/jmx/*', 'wjw/psqueue/msg/*']
 }
+
+uploadArchives {
+  repositories.mavenDeployer {
+    def mvnUsername = project.findProperty("mvnUsername") ?: ""
+    def mvnPassword = project.findProperty("mvnPassword") ?: ""
+  
+    repository(url: "http://svn:8081/nexus/content/repositories/thirdparty/") {
+      authentication(userName: mvnUsername, password: mvnPassword)
+    }
+    
+    pom.groupId = "${project.group}"
+    pom.artifactId = "${project.buildName}"
+    pom.version = "${project.version}"
+    pom.project {
+      name project.name
+      packaging 'jar'
+      description 'Psq Java Client'
+      
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'Psq Java Client'
+        }
+      }
+    
+      developers {
+        developer {
+          id 'wangjunwei'
+          name 'Wang JunWei'
+        }
+      }
+    }
+  }
+}
+
+//为项目生成**.jar/**-javadoc.jar/**-sources.jar
+task javadocJar(type: Jar, dependsOn: [javadoc]) {
+    classifier = 'javadoc'
+    from 'api-doc'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
