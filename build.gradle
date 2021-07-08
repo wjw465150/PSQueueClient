@@ -11,7 +11,8 @@ ext {
 
 repositories {
   mavenLocal()
-  maven{ url "http://SVN:8081/nexus/content/groups/public"}
+  //maven{ url "http://SVN:8081/nexus/content/groups/public"}
+  maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }  //优先使用阿里的镜像
   mavenCentral()
   jcenter()
 }
