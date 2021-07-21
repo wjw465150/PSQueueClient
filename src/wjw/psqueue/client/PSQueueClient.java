@@ -1,3 +1,8 @@
+/*
+ * author: @wjw
+ * date:   2021年7月21日 下午12:16:01
+ * note: 
+ */
 package wjw.psqueue.client;
 
 import java.io.BufferedReader;
@@ -461,6 +466,30 @@ public class PSQueueClient {
 		}
 	}
 
+  /**
+   * 根据nodeCount来出队列.
+   *
+   * @param nodeCount PSQ的服务器节点个数
+   * @param queueName 队列名
+   * @param subName 订阅者名
+   * @return ResData
+   */
+  public ResData poll(final int nodeCount, final String queueName, final String subName) {
+    if(nodeCount <=1) {
+      return this.poll(queueName, subName);
+    }
+    
+    ResData data = null;
+    for (int i = 0; i < nodeCount; i++) {
+      data = this.poll(queueName, subName);
+      if (data.status.code == ResultCode.SUCCESS.code) {
+        break;
+      }
+    }
+
+    return data;
+  }
+  
 	/**
 	 * 查看指定队列名和指定位置的消息
 	 * 

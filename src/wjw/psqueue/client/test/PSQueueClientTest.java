@@ -147,6 +147,16 @@ public class PSQueueClientTest {
 		}
 	}
 
+  @Test
+  public void test_pollNodeCount() {
+    ResData rest = instance.poll(5,queue_name, sub_name);
+    if (rest.status.code == ResultCode.SUCCESS.code) { //成功
+      System.out.println("成功:" + rest.toString());
+    } else {
+      System.out.println("失败:" + rest.toString());
+    }
+  }
+  
 	@Test
 	public void test_view() {
 		ResData rest = instance.view(queue_name, 0);
