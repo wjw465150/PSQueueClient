@@ -37,6 +37,9 @@ sourceSets {
 }
 
 jar {
+  //class与java全部打包
+  from(sourceSets.main.allJava)
+    
   manifest {
     attributes 'Built-By': 'wjw465150@gmail.com',
     'Build-Name': "${project.buildName}",
